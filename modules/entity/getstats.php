@@ -41,6 +41,6 @@ if ($_GET["view"] == "marker") {
 	$output = getStats();
 }
 
-print json_encode($output");
+print json_encode($output);
 
 ?>

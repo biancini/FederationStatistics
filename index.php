@@ -11,23 +11,8 @@ for ($i = 0; $i < count($modules); ++$i) {
 	<title>Statistics on IDEM metadata</title>
 	<link type="text/css" rel="stylesheet" href="resources/style.css">
 	<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="resources/script.js"></script>
 	<script type="text/javascript">
-		function updateMarker(moduleName) {
-			$.ajax({
-				url:      'modules/'+moduleName+'/getstats.php?view=marker',
-				type:     'GET',
-				dataType: 'json',
-				success: function(data){
-					console.log(data);
-					$('#'+moduleName+'_marker').addClass(data);
-				},
-				error: function(data) {
-					console.log("Error while retrieving marker for module " + moduleName);
-				},
-			});
-
-		}
-		
 		$(function() {
 			<?php
 			foreach ($modules as $module) {

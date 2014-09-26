@@ -49,19 +49,3 @@ function select_entity() {
 
 	document.getElementById('entityframe').innerHTML = '';
 }
-
-function show_entity(entitylist, entityId) {
-	$('.entitylist').removeClass('highlight');
-	entitylist.className = 'entitylist highlight';
-
-	$.ajax({
-		url: "getentity.php?id=" + entityId,
-		success: function(data) {
-			var brush = new SyntaxHighlighter.brushes.Xml();
-			brush.init({ toolbar: false });
-			var html = brush.getHtml(data);
-			document.getElementById('entityframe').innerHTML = html;
-		}
-	});
-	return false;
-}
