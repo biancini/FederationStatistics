@@ -2,7 +2,7 @@ var info_page_data, info_page_chart;
 
 function draw_info_page() {
 	$.ajax({
-		url:      'getstats.php',
+		url:      'modules/info_page/getstats.php',
 		type:     'POST',
 		dataType: 'json',
 		success: function(data){
@@ -47,9 +47,9 @@ function select_info_page() {
 		html += "</ul>";
 
 		$("#info_page_details").append(html);
-	} else {
-		document.getElementById('entityframe').innerHTML = '';
 	}
+
+	document.getElementById('entityframe').innerHTML = '';
 }
 
 function show_entity(entitylist, entityId) {
@@ -57,7 +57,7 @@ function show_entity(entitylist, entityId) {
 	entitylist.className = 'highlight entitylist';
 
 	$.ajax({
-		url: "../../getentity.php?id=" + entityId,
+		url: "getentity.php?id=" + entityId,
 		success: function(data) {
 			var brush = new SyntaxHighlighter.brushes.Xml();
 			brush.init({ toolbar: false });

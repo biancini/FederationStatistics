@@ -1,12 +1,9 @@
 <?php
 
-include('../../getstats.php');
+include('../../functions.php');
 
 function getStats() {
-	global $metadata_url;
-	$feed = file_get_contents($metadata_url);
-	$xml = new SimpleXmlElement($feed);
-	$entities = $xml->xpath("//md:EntityDescriptor");
+	$entities = _getEntities("ALL");
 
 	$output = array(
 		"count" => 0,
@@ -29,10 +26,21 @@ function getStats() {
 
 	usort($output["idps"], "_sortEntitites");
 	usort($output["sps"], "_sortEntitites");
-	print json_encode($output);
+	return $output;
+}
+
+function getMarker() {
+	return "";
 }
 
 header("Content-Type: application/json");
-getStats();
+
+if ($_GET["view"] == "marker") {
+	$output = getMarker();
+} else {
+	$output = getStats();
+}
+
+print json_encode($output");
 
 ?>

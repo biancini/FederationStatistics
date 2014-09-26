@@ -2,21 +2,21 @@ var privacy_page_data, privacy_page_chart;
 
 function draw_privacy_page() {
 	$.ajax({
-		url:      'getstats.php',
+		url:      'modules/privacy_page/getstats.php',
 		type:     'POST',
 		dataType: 'json',
 		success: function(data){
 			//console.log(data);
 
 			privacy_page_data = google.visualization.arrayToDataTable([
-				['Info Page', 'Count', 'Details'],
+				['Privacy Page', 'Count', 'Details'],
 				['No Page', data["zero"].length, data["zero"]],
 				['Only Italian',  data["only_it"].length, data["only_it"]],
 				['Only English',  data["only_en"].length, data["only_en"]],
 				['Both Languages',  data["ok"].length, data["ok"]],
 			]);
 			var options = {
-				title: 'Information Pages stats',
+				title: 'Privacy Pages stats',
 				pieHole: 0.4,
 				legend: { "maxLines": 2, "position": "top" }
 			};
@@ -47,9 +47,9 @@ function select_privacy_page() {
 		html += "</ul>";
 
 		$("#privacy_page_details").append(html);
-	} else {
-		document.getElementById('entityframe').innerHTML = '';
 	}
+
+	document.getElementById('entityframe').innerHTML = '';
 }
 
 function show_entity(entitylist, entityId) {
@@ -57,7 +57,7 @@ function show_entity(entitylist, entityId) {
 	entitylist.className = 'highlight entitylist';
 
 	$.ajax({
-		url: "../../getentity.php?id=" + entityId,
+		url: "getentity.php?id=" + entityId,
 		success: function(data) {
 			var brush = new SyntaxHighlighter.brushes.Xml();
 			brush.init({ toolbar: false });

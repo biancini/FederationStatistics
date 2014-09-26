@@ -9,7 +9,33 @@ for ($i = 0; $i < count($modules); ++$i) {
 <html>
 <head>
 	<title>Statistics on IDEM metadata</title>
-	<link rel="stylesheet" href="style.css">
+	<link type="text/css" rel="stylesheet" href="resources/style.css">
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+		function updateMarker(moduleName) {
+			$.ajax({
+				url:      'modules/'+moduleName+'/getstats.php?view=marker',
+				type:     'GET',
+				dataType: 'json',
+				success: function(data){
+					console.log(data);
+					$('#'+moduleName+'_marker').addClass(data);
+				},
+				error: function(data) {
+					console.log("Error while retrieving marker for module " + moduleName);
+				},
+			});
+
+		}
+		
+		$(function() {
+			<?php
+			foreach ($modules as $module) {
+				print "updateMarker('". $module . "');";
+			}
+			?>
+		});
+	</script>
 </head>
 <body>
 	<!--
@@ -17,11 +43,8 @@ for ($i = 0; $i < count($modules); ++$i) {
 	 - request some
 	 - how many are requested
 	 - most requested attributes
-	Languages supported
 	Contact Information
 	Organization information
-	Logo images
-	SP - init request initiator init:RequestInitiator
 	-->
 
 	<div>
@@ -31,7 +54,10 @@ for ($i = 0; $i < count($modules); ++$i) {
 			foreach ($modules as $module) {
 				$mod_details = parse_ini_file("modules/" . $module . "/module.ini");
 				?>
-				<li><a href="modules/<?= $module ?>"><?= $mod_details["description"] ?></a></li>
+				<li>
+					<a href="module.php?mod=<?= $module ?>"><?= $mod_details["description"] ?>
+					<span id="<?= $module ?>_marker" class="marker"></a>
+				</li>
 				<?php
 			}
 			?>

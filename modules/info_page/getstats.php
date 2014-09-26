@@ -1,12 +1,9 @@
 <?php
 
-include('../../getstats.php');
+include('../../functions.php');
 
 function getStats() {
-	global $metadata_url;
-	$feed = file_get_contents($metadata_url);
-	$xml = new SimpleXmlElement($feed);
-	$entities = $xml->xpath("//md:EntityDescriptor");
+	$entities = _getEntities("ALL");
 
 	$output = array(
 		"count" => 0,
@@ -38,10 +35,33 @@ function getStats() {
 	usort($output["only_it"], "_sortEntitites");
 	usort($output["only_en"], "_sortEntitites");
 	usort($output["ok"], "_sortEntitites");
-	print json_encode($output);
+	return $output;
+}
+
+function getMarker() {
+	$green = .9;
+	$amber = .8;
+	
+	$stats = getStats();
+	$ratio = count($stats["ok"]) / $stats["count"];
+
+	if ($ratio >= $green) {
+		return "green";
+	} elseif ($ratio >= $amber) {
+		return "amber";
+	} else {
+		return "red";
+	}
 }
 
 header("Content-Type: application/json");
-getStats();
+
+if ($_GET["view"] == "marker") {
+	$output = getMarker();
+} else {
+	$output = getStats();
+}
+
+print json_encode($output);
 
 ?>

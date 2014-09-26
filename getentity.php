@@ -1,5 +1,5 @@
 <?php
-include('getstats.php');
+include('functions.php');
 
 global $metadata_url;
 
