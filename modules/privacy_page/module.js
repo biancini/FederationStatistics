@@ -18,7 +18,7 @@ function draw_privacy_page() {
 			var options = {
 				title: 'Information Pages stats',
 				pieHole: 0.4,
-				legend: { "position": "bottom" }
+				legend: { "maxLines": 2, "position": "top" }
 			};
 			privacy_page_chart = new google.visualization.PieChart(document.getElementById('privacy_page_graph'));
 			privacy_page_chart.draw(privacy_page_data, options);
@@ -40,17 +40,30 @@ function select_privacy_page() {
 		var entities = privacy_page_data.getValue(selectedItem.row || 0, 2);
 		//console.log('The user selected ' + value);
 
-		var html = "<h3>List of entities with " + value + ":</h3><ul>";
+		var html = "<h3>List of entities with " + value.toLowerCase() + ":</h3><ul>";
 		for (var i = 0; i < entities.length; ++i) {
-			html += "<li><a href=\"#\" onclick=\"show_entity('" + entities[i]["id"] + "');\">" + entities[i]["name"] + "</a></li>";
+			html += "<li class='entitylist'><a href=\"#\" onclick=\"return show_entity(this, '" + entities[i]["id"] + "');\">" + entities[i]["name"] + "</a></li>";
 		}
 		html += "</ul>";
 
 		$("#privacy_page_details").append(html);
+	} else {
+		document.getElementById('entityframe').innerHTML = '';
 	}
 }
 
-function show_entity(entityId) {
-        var url = "../../getentity.php?id=" + entityId;
-        $("#entityframe").attr('src', url);
+function show_entity(entitylist, entityId) {
+	$('.entitylist').removeClass('highlight');
+	entitylist.className = 'highlight entitylist';
+
+	$.ajax({
+		url: "../../getentity.php?id=" + entityId,
+		success: function(data) {
+			var brush = new SyntaxHighlighter.brushes.Xml();
+			brush.init({ toolbar: false });
+			var html = brush.getHtml(data);
+			document.getElementById('entityframe').innerHTML = html;
+		}
+	});
+	return false;
 }

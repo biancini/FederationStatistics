@@ -16,7 +16,7 @@ function draw_entity() {
 			var options = {
 				title: 'IDEM entities by type',
 				pieHole: 0.4,
-				legend: { "position": "bottom" }
+				legend: { "position": "top" }
 			};
 			entity_chart = new google.visualization.PieChart(document.getElementById('entity_graph'));
 			entity_chart.draw(entity_data, options);
@@ -40,15 +40,28 @@ function select_entity() {
 
 		var html = "<h3>List of all the " + value + " of the IDEM federation:</h3><ul>";
 		for (var i = 0; i < entities.length; ++i) {
-			html += "<li><a href=\"#\" onclick=\"show_entity('" + entities[i]["id"] + "');\">" + entities[i]["name"] + "</a></li>";
+			html += "<li class='entitylist'><a href=\"#\" onclick=\"return show_entity(this, '" + entities[i]["id"] + "');\">" + entities[i]["name"] + "</a></li>";
 		}
 		html += "</ul>";
 
 		$("#entity_details").append(html);
+	} else {
+		document.getElementById('entityframe').innerHTML = '';
 	}
 }
 
-function show_entity(entityId) {
-	var url = "../../getentity.php?id=" + entityId;
-	$("#entityframe").attr('src', url);
+function show_entity(entitylist, entityId) {
+	$('.entitylist').removeClass('highlight');
+	entitylist.className = 'entitylist highlight';
+
+	$.ajax({
+		url: "../../getentity.php?id=" + entityId,
+		success: function(data) {
+			var brush = new SyntaxHighlighter.brushes.Xml();
+			brush.init({ toolbar: false });
+			var html = brush.getHtml(data);
+			document.getElementById('entityframe').innerHTML = html;
+		}
+	});
+	return false;
 }
