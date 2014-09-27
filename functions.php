@@ -12,18 +12,26 @@ function _getEntities($filter = "ALL") {
 	foreach ($all_entities as $entity) {
 		if ($filter == "IDP") {
 			if (count($entity->xpath(".//md:IDPSSODescriptor")) > 0) {
-				$filtered_entities[] = $entity;
+				$filtered_entities[] = _registerNs($entity);
 			}
 		} elseif ($filter == "SP") {
 			if (count($entity->xpath(".//md:SPSSODescriptor")) > 0) {
-				$filtered_entities[] = $entity;
+				$filtered_entities[] = _registerNs($entity);
 			}
 		} else {
-			$filtered_entities[] = $entity;
+			$filtered_entities[] = _registerNs($entity);
 		}
 	}
 
 	return $filtered_entities;
+}
+
+function _registerNs($entity) {
+	$entity->registerXPathNamespace("md", "urn:oasis:names:tc:SAML:2.0:metadata");
+	$entity->registerXPathNamespace("mdui", "urn:oasis:names:tc:SAML:metadata:ui");
+	$entity->registerXPathNamespace("init", "urn:oasis:names:tc:SAML:profiles:SSO:request-init");
+
+	return $entity;
 }
 
 function _stringSanitize($instring) {

@@ -18,7 +18,10 @@ function draw_info_page() {
 			var options = {
 				title: 'Information Pages stats',
 				pieHole: 0.4,
-				legend: { "maxLines": 2, "position": "top" }
+				legend: { "maxLines": 2, "position": "top" },
+				titleTextStyle: { fontSize: 19 },
+				fontName: "Helvetica",
+				fontSize: 12,
 			};
 			info_page_chart = new google.visualization.PieChart(document.getElementById('info_page_graph'));
 			info_page_chart.draw(info_page_data, options);

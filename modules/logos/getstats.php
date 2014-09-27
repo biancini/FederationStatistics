@@ -18,25 +18,25 @@ function getStats() {
 		$curentity["id"] = _stringSanitize((string) $entity["entityID"]);
 		$curentity["name"] = _getEntityName($entity);
 
-		$lang_en = "[@xml:lang='en']";
-		$lang_it = "[@xml:lang='it']";
-		$size_16 = "[@height='16'][@width='16']";
-		$size_80 = "[@height='80'][@width='80']";
+		$lang_en = "@xml:lang='en'";
+		$lang_it = "@xml:lang='it'";
+		$size_16 = "@height='16' and @width='16'";
+		$size_80 = "@height='60' and @width='80'";
 
-		if (count($entity->xpath(".//mdui:Logo" . $lang_en . $size16)) > 0 &&
-		    count($entity->xpath(".//mdui:Logo" . $lang_en . $size80)) > 0 &&
-		    count($entity->xpath(".//mdui:Logo" . $lang_it . $size16)) > 0 &&
-		    count($entity->xpath(".//mdui:Logo" . $lang_it . $size80)) > 0) {
+		if (count($entity->xpath(".//mdui:Logo[" . $lang_en . " and " . $size_16 . "]")) > 0 &&
+		    count($entity->xpath(".//mdui:Logo[" . $lang_en . " and " . $size_80 . "]")) > 0 &&
+		    count($entity->xpath(".//mdui:Logo[" . $lang_it . " and " . $size_16 . "]")) > 0 &&
+		    count($entity->xpath(".//mdui:Logo[" . $lang_it . " and " . $size_80 . "]")) > 0) {
 			$output["ok"][] = $curentity;
-		} elseif ((count($entity->xpath(".//mdui:Logo" . $lang_en . $size16)) > 0 &&
-		           count($entity->xpath(".//mdui:Logo" . $lang_en . $size80)) > 0) ||
-		          (count($entity->xpath(".//mdui:Logo" . $lang_it . $size16)) > 0 &&
-		           count($entity->xpath(".//mdui:Logo" . $lang_it . $size80)) > 0)) {
+		} elseif ((count($entity->xpath(".//mdui:Logo[" . $lang_en . " and " . $size_16 . "]")) > 0 &&
+		           count($entity->xpath(".//mdui:Logo[" . $lang_en . " and " . $size_80 . "]")) > 0) ||
+		          (count($entity->xpath(".//mdui:Logo[" . $lang_it . " and " . $size_16 . "]")) > 0 &&
+		           count($entity->xpath(".//mdui:Logo[" . $lang_it . " and " . $size_80 . "]")) > 0)) {
 			$output["miss_lang"][] = $curentity;
-		} elseif ((count($entity->xpath(".//mdui:Logo" . $lang_en . $size16)) > 0 &&
-		           count($entity->xpath(".//mdui:Logo" . $lang_it . $size16)) > 0) ||
-		          (count($entity->xpath(".//mdui:Logo" . $lang_en . $size80)) > 0 &&
-		           count($entity->xpath(".//mdui:Logo" . $lang_it . $size80)) > 0)) {
+		} elseif ((count($entity->xpath(".//mdui:Logo[" . $lang_en . " and " . $size_16 . "]")) > 0 &&
+		           count($entity->xpath(".//mdui:Logo[" . $lang_it . " and " . $size_16 . "]")) > 0) ||
+		          (count($entity->xpath(".//mdui:Logo[" . $lang_en . " and " . $size_80 . "]")) > 0 &&
+		           count($entity->xpath(".//mdui:Logo[" . $lang_it . " and " . $size_80 . "]")) > 0)) {
 			$output["miss_size"][] = $curentity;
 		} else {
 			$output["ko"][] = $curentity;

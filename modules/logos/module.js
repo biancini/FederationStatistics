@@ -13,12 +13,15 @@ function draw_logos() {
 				['OK', data["ok"].length, data["ok"]],
 				['Miss Language',  data["miss_lang"].length, data["miss_lang"]],
 				['Miss Size',  data["miss_size"].length, data["miss_size"]],
-				['Wrong Logoes',  data["ko"].length, data["ko"]],
+				['Wrong Logos',  data["ko"].length, data["ko"]],
 			]);
 			var options = {
 				title: 'Logos stats for IdPs',
 				pieHole: 0.4,
-				legend: { "maxLines": 2, "position": "top" }
+				legend: { "maxLines": 2, "position": "top" },
+				titleTextStyle: { fontSize: 19 },
+				fontName: "Helvetica",
+				fontSize: 12,
 			};
 			logos_chart = new google.visualization.PieChart(document.getElementById('logos_graph'));
 			logos_chart.draw(logos_data, options);

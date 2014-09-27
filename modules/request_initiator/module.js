@@ -16,7 +16,10 @@ function draw_request_initiator() {
 			var options = {
 				title: 'Request initiator stats for SPs',
 				pieHole: 0.4,
-				legend: { "position": "top" }
+				legend: { "position": "top" },
+				titleTextStyle: { fontSize: 19 },
+				fontName: "Helvetica",
+				fontSize: 12,
 			};
 			request_initiator_chart = new google.visualization.PieChart(document.getElementById('request_initiator_graph'));
 			request_initiator_chart.draw(request_initiator_data, options);
@@ -40,7 +43,7 @@ function select_request_initiator() {
 
 		var html = "<h3>List of all the " + value + " of the IDEM federation:</h3><ul>";
 		for (var i = 0; i < entities.length; ++i) {
-			html += "<li class='entitylist'><a href=\"#\" onclick=\"return show_request_initiator(this, '" + entities[i]["id"] + "');\">" + entities[i]["name"] + "</a></li>";
+			html += "<li class='entitylist'><a href=\"#\" onclick=\"return show_entity(this, '" + entities[i]["id"] + "');\">" + entities[i]["name"] + "</a></li>";
 		}
 		html += "</ul>";
 

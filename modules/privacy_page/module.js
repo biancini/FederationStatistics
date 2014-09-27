@@ -18,7 +18,10 @@ function draw_privacy_page() {
 			var options = {
 				title: 'Privacy Pages stats',
 				pieHole: 0.4,
-				legend: { "maxLines": 2, "position": "top" }
+				legend: { "maxLines": 2, "position": "top" },
+				titleTextStyle: { fontSize: 19 },
+				fontName: "Helvetica",
+				fontSize: 12,
 			};
 			privacy_page_chart = new google.visualization.PieChart(document.getElementById('privacy_page_graph'));
 			privacy_page_chart.draw(privacy_page_data, options);

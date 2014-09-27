@@ -16,7 +16,10 @@ function draw_entity() {
 			var options = {
 				title: 'IDEM entities by type',
 				pieHole: 0.4,
-				legend: { "position": "top" }
+				legend: { "maxLines": 2, "position": "top" },
+				titleTextStyle: { fontSize: 19 },
+				fontName: "Helvetica",
+				fontSize: 12,
 			};
 			entity_chart = new google.visualization.PieChart(document.getElementById('entity_graph'));
 			entity_chart.draw(entity_data, options);
